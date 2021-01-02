@@ -13,3 +13,4 @@ Web-application for virtual trading.
 
 ### TODO
 1. Client authorization
+2. Price graphics
