@@ -18,7 +18,6 @@ import org.litote.kmongo.reactivestreams.KMongo
 import org.litote.kmongo.setValue
 
 
-
 val client = KMongo.createClient().coroutine
 val database = client.getDatabase("shoppingList")
 val collection = database.getCollection<User>()
@@ -59,33 +58,33 @@ fun main() {
                     val username = call.parameters["username"]?.toString() ?: error("Invalid delete request")
                     val user = collection.findOne(User::name eq username)!!
                     val symb = call.receive<Case>().symbol
-                    user.cases.removeIf{it.symbol == symb}
+                    user.cases.removeIf { it.symbol == symb }
                     collection.updateOne(User::name eq username, user)
                     call.respond(HttpStatusCode.OK)
                 }
             }
-            route("/list/{username}"){
+            route("/list/{username}") {
                 get {
                     val username = call.parameters["username"]?.toString() ?: error("Invalid delete request")
                     val list = collection.findOne(User::name eq username)!!.cases
                     call.respond(list)
                 }
             }
-            route("/transaction"){
-                post("/{username}"){
-                        val username = call.parameters["username"]?.toString() ?: error("Invalid delete request")
-                        val newCase = call.receive<Case>()
-                        val list = collection.findOne(User::name eq username)!!.cases
-                        for (case in list){
-                            if (case.symbol == newCase.symbol){
-                                case.count = newCase.count
-                            }
+            route("/transaction") {
+                post("/{username}") {
+                    val username = call.parameters["username"]?.toString() ?: error("Invalid delete request")
+                    val newCase = call.receive<Case>()
+                    val list = collection.findOne(User::name eq username)!!.cases
+                    for (case in list) {
+                        if (case.symbol == newCase.symbol) {
+                            case.count = newCase.count
                         }
-                        collection.updateOne(
-                            User::name eq username,
-                            setValue(User::cases, list)
-                        )
-                        call.respond(HttpStatusCode.OK)
+                    }
+                    collection.updateOne(
+                        User::name eq username,
+                        setValue(User::cases, list)
+                    )
+                    call.respond(HttpStatusCode.OK)
                 }
             }
             route("/balance/{username}") {
@@ -107,7 +106,7 @@ fun main() {
                     call.respond(HttpStatusCode.OK)
                 }
             }
-            route("/list"){
+            route("/list") {
                 get {
                     call.respond(collection.find().toList())
                 }

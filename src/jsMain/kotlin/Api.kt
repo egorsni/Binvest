@@ -17,7 +17,7 @@ val twelveClient = HttpClient {
     install(JsonFeature) { serializer = KotlinxSerializer() }
     defaultRequest { // this: HttpRequestBuilder ->
         method = HttpMethod.Get
-        headers.append("x-rapidapi-key", "6367993712mshf751d637c5c8670p11cacajsnf4d55fb242ff")
+        headers.append("x-rapidapi-key", "8ae5233fd2msh2fa90d14987f249p17283djsnafba9eaec335")
         headers.append("x-rapidapi-host", "twelve-data1.p.rapidapi.com")
     }
 }
@@ -26,8 +26,9 @@ suspend fun getTime(): String {
     return jsonClient.get("http://worldclockapi.com/api/json/est/now")
 }
 
-suspend fun getCase(curCase: Case) : Case {
-    val newPrice = twelveClient.get<Data>("https://twelve-data1.p.rapidapi.com/price?symbol=${curCase.symbol}&outputsize=30&format=json")
+suspend fun getCase(curCase: Case): Case {
+    val newPrice =
+        twelveClient.get<Data>("https://twelve-data1.p.rapidapi.com/price?symbol=${curCase.symbol}&outputsize=30&format=json")
     curCase.price = newPrice.curPrice
     return curCase
 }
@@ -36,7 +37,7 @@ suspend fun getUserBalance(username: String = "egorsni"): Double {
     return jsonClient.get("$endpoint/balance/${username}")
 }
 
-suspend fun setUserBalanceApi(username: String = "egorsni", newBalance: Double){
+suspend fun setUserBalanceApi(username: String = "egorsni", newBalance: Double) {
     jsonClient.post<Unit>("$endpoint/balance/${username}") {
         contentType(ContentType.Application.Json)
         body = newBalance
@@ -63,7 +64,7 @@ suspend fun setUserCase(username: String = "egorsni", case: Case) {
 }
 
 suspend fun deleteUserCase(username: String = "egorsni", case: Case) {
-    jsonClient.delete<Unit>("$endpoint/case/${username}"){
+    jsonClient.delete<Unit>("$endpoint/case/${username}") {
         contentType(ContentType.Application.Json)
         body = case
     }

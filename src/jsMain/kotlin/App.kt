@@ -28,26 +28,27 @@ val App = functionalComponent<RProps> { _ ->
         GlobalScope.launch {
             setUserBalance(getUserBalance())
             setUserList(getUserList())
+            console.log("0")
         }
     }
-    styledDiv(){
-        css{
+    styledDiv() {
+        css {
             display = Display.flex
         }
         mTypography(variant = MTypographyVariant.h2, className = "classes.title") {
             +"Your balance: ${userBalance.round(2)}$"
-            css{
+            css {
                 paddingBottom = 20.px
-                width = 650.px
+                width = 750.px
             }
         }
-        styledDiv{
-            css{
+        styledDiv {
+            css {
                 position = Position.absolute
                 top = 10.px
                 right = 10.px
             }
-            div(classes = "input"){
+            div(classes = "input") {
                 child(
                     Input,
                     props = jsObject {
@@ -63,18 +64,17 @@ val App = functionalComponent<RProps> { _ ->
             }
         }
     }
-    div{
-        key = userList.toString()
-        for (i in 0 until (userList.size + 1)/2){
-            var k = i*2
+    div {
+        for (i in 0 until (userList.size + 1) / 2) {
+            var k = i * 2
             styledDiv {
-                css{
+                css {
                     display = Display.flex
                 }
-                for (y in 0..min(1,userList.size - 1 - k)){
+                for (y in 0..min(1, userList.size - 1 - k)) {
                     child(
                         Box,
-                        props = jsObject{
+                        props = jsObject {
                             case = userList[k + y]
                             onBuyCase = { case ->
                                 if (userBalance - case.price >= 0) {
@@ -83,13 +83,12 @@ val App = functionalComponent<RProps> { _ ->
                                         setUserBalanceApi(newBalance = userBalance - case.price)
                                         setUserCase(case = case)
                                     }
-                                }
-                                else{
+                                } else {
                                     window.alert("No money for buying")
                                 }
                             }
                             onDelete = { case ->
-                                if (case.count == 0){
+                                if (case.count == 0) {
                                     setUserList((userList - case).toMutableList())
                                     GlobalScope.launch {
                                         deleteUserCase(case = case)
@@ -106,8 +105,7 @@ val App = functionalComponent<RProps> { _ ->
                                         setUserBalanceApi(newBalance = userBalance + case.price)
 //                                        setUserListApi(userList)
                                     }
-                                }
-                                else{
+                                } else {
                                     window.alert("Nothing to sell")
                                 }
                             }
@@ -117,8 +115,8 @@ val App = functionalComponent<RProps> { _ ->
             }
         }
     }
-
 }
+
 fun Double.round(decimals: Int): Double {
     var multiplier = 1.0
     repeat(decimals) { multiplier *= 10 }
