@@ -26,12 +26,7 @@ suspend fun getTime(): String {
     return jsonClient.get("http://worldclockapi.com/api/json/est/now")
 }
 
-suspend fun getCase(curCase: Case): Case {
-    val newPrice =
-        twelveClient.get<Data>("https://twelve-data1.p.rapidapi.com/price?symbol=${curCase.symbol}&outputsize=30&format=json")
-    curCase.price = newPrice.curPrice
-    return curCase
-}
+suspend fun getPrice(symbol: String) = twelveClient.get<Data>("https://twelve-data1.p.rapidapi.com/price?symbol=${symbol}&outputsize=30&format=json").price.toString()
 
 suspend fun getUserBalance(username: String = "egorsni"): Double {
     return jsonClient.get("$endpoint/balance/${username}")
