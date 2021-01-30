@@ -1,32 +1,67 @@
-import kotlinx.browser.window
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.css.*
-import react.*
+import react.RBuilder
+import react.RProps
+import react.child
 import react.dom.*
-import kotlinx.html.js.*
-import kotlinx.html.InputType
-import org.w3c.dom.events.Event
-import org.w3c.dom.HTMLInputElement
-import styled.css
-import styled.styledDiv
+import react.functionalComponent
+import react.router.dom.*
 
+val Home = functionalComponent<RProps> { h2 { +"Home" } }
+val About = functionalComponent<RProps> { h2 { +"About" } }
 
-private val scope = MainScope()
+val Topics = functionalComponent<RProps> {
+    val match = useRouteMatch<RProps>() ?: return@functionalComponent
 
-val TimeComponent = functionalComponent<InputProps> { props ->
-    val (time, setTime) = useState("props.case")
-    useEffect(dependencies = mutableListOf()) {
-        GlobalScope.launch {
-            while (true) {
-                setTime(getTime())
-                delay(1000)
+    div {
+        h2 { +"Topics" }
+
+        ul {
+            li {
+                routeLink("${match.url}/components") { +"Components" }
+            }
+            li {
+                routeLink("${match.url}/props-v-state") { +"Props v. State" }
+            }
+        }
+
+        switch {
+            route("${match.path}/:topicId") { child(Topic) }
+            route(match.path) {
+                h3 { +"Please select a topic." }
             }
         }
     }
-    div(classes = "Box") {
-        +"$time"
-    }
 }
+
+external interface TopicProps : RProps {
+    val topicId: String
+}
+
+val Topic = functionalComponent<RProps> {
+    val topicId = useParams<TopicProps>()?.topicId ?: return@functionalComponent
+
+    h3 { +"Requested topic ID: $topicId" }
+}
+
+//fun RBuilder.appWithRouter() {
+//    browserRouter {
+//        div {
+//            ul {
+//                li {
+//                    routeLink("/") { +"Home" }
+//                }
+//                li {
+//                    routeLink("/about") { +"About" }
+//                }
+//                li {
+//                    routeLink("/topics") { +"Topics" }
+//                }
+//            }
+//
+//            switch {
+//                route("/about") { child(About) }
+//                route("/topics") { child(Topics) }
+//                route("/") { child(Home) }
+//            }
+//        }
+//    }
+//}

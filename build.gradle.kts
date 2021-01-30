@@ -72,6 +72,7 @@ kotlin {
                 implementation(npm("styled-components", "~5.1.1"))
                 implementation(npm("inline-style-prefixer", "~6.0.0"))
                 implementation("com.ccfraser.muirwik:muirwik-components:0.6.2")
+                implementation("org.jetbrains:kotlin-react-router-dom:5.2.0-pre.134-kotlin-1.4.10")
             }
         }
     }

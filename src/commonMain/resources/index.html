@@ -1,22 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <style>
-    .form-control{
-        width:100%;
+    .logodiv {
+        position: absolute;
+        left: 50px;
     }
+    .nav {
+        display: flex;
+        align-items: center;
+        min-height: 10vh;
+        background: cornflowerblue;
+        color: white;
+        justify-content: space-around;
+        margin: 0 auto;
+        padding: 10px 0;
+    }
+    .nav-links{
+        position: absolute;
+        right: 10px;
+        display: flex;
+    }
+
+    .authdiv{
+        position: relative;
+        display: flex;
+        color: white;
+    }
+
+    .authform{
+        width: 70%;
+        margin-right: 15px;
+        margin-left: 15px;
+    }
+
+    .App {
+        text-align: center;
+    }
+
     .Box {
-        margin-bottom:20px;
-        width:40%;
+        margin-bottom: 20px;
+        width: 40%;
         height: 200px;
         background-color: #ffffff;
-        position:relative;
+        position: relative;
         border: 2px solid #D4D4D4;
         border-radius: 30px;
         box-shadow: 0 0 15px #A9A9A9;
-        padding:20px 40px;
+        padding: 20px 40px;
         margin-left: auto;
         margin-right: auto;
     }
+
+    .form {
+        width: 400px;
+    }
+
+
     .css-chart {
         /* The chart borders */
         border-bottom: 1px solid;
@@ -31,11 +70,13 @@
         /* The chart width, as defined in the HTML */
         width: 200px;
     }
+
     .line-chart {
         list-style: none;
         margin: 0;
         padding: 0;
     }
+
     .data-point {
         background-color: white;
         border: 2px solid lightblue;
@@ -44,12 +85,7 @@
         position: absolute;
         width: 12px;
     }
-    .input{
-        position: relative;
-        right: 10px;
-        height: max-content;
-        width: 250px;
-    }
+
 </style>
 <head>
     <meta charset="UTF-8">

@@ -29,7 +29,7 @@ val Input = functionalComponent<InputProps> { props ->
         setText(value)
     }
 
-        form(classes = "form-control"){
+        form (classes = "form"){
             attrs.onSubmitFunction = submitHandler
             mTextField(required = false, label ="Write company symbol", id = "standard-basic", fullWidth = true) {
                 attrs.onChange = changeHandler

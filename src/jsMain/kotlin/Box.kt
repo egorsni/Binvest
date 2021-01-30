@@ -20,6 +20,7 @@ external interface BoxProps : RProps {
     var onDelete: (Case) -> Unit
     var onSellCase: (Case) -> Unit
     var case: Case
+    var username: String
 }
 
 private val scope = MainScope()
@@ -27,12 +28,14 @@ private val scope = MainScope()
 val Box = functionalComponent<BoxProps> { props ->
 
     val (price, setPrice) = useState("0.0")
+    val (time, setTime) = useState("0.0")
     val (count, setCount) = useState(props.case.count)
     useEffect(dependencies = mutableListOf()) {
         scope.launch() {
             while (true) {
                 setPrice(getPrice(props.case.symbol))
-                delay(10000)
+//                setTime(getTime())
+                delay(120000)
             }
         }
     }
@@ -64,6 +67,10 @@ val Box = functionalComponent<BoxProps> { props ->
                 if (price != "0.0") {
                     +price
                 }
+//                key = time.toString()
+//                if (time != "0.0") {
+//                    +time
+//                }
             }
             styledDiv {
                 css {
@@ -83,7 +90,7 @@ val Box = functionalComponent<BoxProps> { props ->
                             onClick = {
                                 if (price != "0.0") {
                                     GlobalScope.launch {
-                                        if (getUserBalance() >= price.toDouble()) {
+                                        if (getUserBalance(username = props.username) >= price.toDouble()) {
                                             setCount(count + 1)
                                             props.onBuyCase(Case(props.case.symbol, price.toDouble(), count + 1))
                                         } else{

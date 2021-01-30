@@ -1,4 +1,10 @@
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class User(val name: String, var balance: Double, var cases: MutableList<Case> = mutableListOf())
+data class User(
+    val name: String,
+    var balance: Double,
+    var cases: MutableList<Case> = mutableListOf(),
+    val password: String,
+    val email: String = ""
+)
